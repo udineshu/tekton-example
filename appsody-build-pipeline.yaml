@@ -4,9 +4,9 @@ metadata:
   name: appsody-build-pipeline
 spec:
   resources:
-    - name: git-source
+    - name: git-sources
       type: git
-    - name: docker-image
+    - name: docker-images
       type: image
   tasks:
     - name: appsody-build
@@ -14,10 +14,10 @@ spec:
         name: appsody-build-push-deploy-task
       resources:
         inputs:
-        - name: git-source
-          resource: git-source
-        - name: docker-image
-          resource: docker-image
+        - name: git-sources
+          resource: git-sources
+        - name: docker-images
+          resource: docker-images
       params:
       - name: app-deploy-file-name
         value: app-deploy.yaml
