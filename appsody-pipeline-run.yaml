@@ -3,14 +3,14 @@ kind: PipelineRun
 metadata:
   name: appsody-manual-pipeline-run
 spec:
-  serviceAccountName: appsody-sa
+  serviceAccountName: service-account-dinesh
   timeout: "1h0m0s"  
   pipelineRef:
     name: appsody-build-pipeline
   resources:
-    - name: git-source
+    - name: git-sources
       resourceRef:
-        name: git-source
-    - name: docker-image
+        name: git-sources
+    - name: docker-images
       resourceRef:
-        name: docker-image
+        name: docker-images
