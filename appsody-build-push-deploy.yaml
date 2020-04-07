@@ -5,9 +5,9 @@ metadata:
 spec:
   inputs:
     resources:
-      - name: git-source
+      - name: git-sources
         type: git
-      - name: docker-image
+      - name: docker-images
         type: image
     params:
       - name: app-deploy-file-name
@@ -20,10 +20,10 @@ spec:
       command: ['/bin/bash']
       args:
         - -c
-        - "cd /workspace/$gitsource && appsody build -v --buildah --buildah-options='--format=docker' -t $(inputs.resources.docker-image.url) -f $(inputs.params.app-deploy-file-name)"
+        - "cd /workspace/$gitsource && appsody build -v --buildah --buildah-options='--format=docker' -t $(inputs.resources.docker-images.url) -f $(inputs.params.app-deploy-file-name)"
       env:
         - name: gitsource
-          value: git-source
+          value: git-sources
       volumeMounts:
         - mountPath: /var/lib/containers
           name: varlibcontainers
@@ -31,7 +31,7 @@ spec:
       securityContext:
         privileged: true
       image: appsody/appsody-buildah:0.5.3-buildah1.9.0
-      command: ['buildah', 'push', '--tls-verify=false', '$(inputs.resources.docker-image.url)', 'docker://$(inputs.resources.docker-image.url)']
+      command: ['buildah', 'push', '--tls-verify=false', '$(inputs.resources.docker-images.url)', 'docker://$(inputs.resources.docker-images.url)']
       volumeMounts:
          - mountPath: /var/lib/containers
            name: varlibcontainers
@@ -41,7 +41,7 @@ spec:
       args: ['-c', 'cd /workspace/$gitsource && kubectl apply -f $(YAMLFILE)']
       env:
         - name: gitsource
-          value: git-source
+          value: git-sources
         - name: YAMLFILE
           value: $(inputs.params.app-deploy-file-name)
   volumes:
